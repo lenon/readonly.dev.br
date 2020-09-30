@@ -1,4 +1,9 @@
-baseURL = "http://example.org/"
+baseURL = "https://readonly.dev.br/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "readonly.dev.br"
 theme = "hugo-bearblog"
+author = "Lenon Marcel"
+copyright = "Copyright © 2020, Lenon Marcel."
+
+[params]
+  hideMadeWithLine = true
