@@ -1,9 +1,12 @@
 baseURL = "https://readonly.dev.br/"
 languageCode = "en-us"
-title = "readonly.dev.br"
+title = "[ro]"
 theme = "hugo-bearblog"
 author = "Lenon Marcel"
 copyright = "Copyright © 2020, Lenon Marcel."
 
 [params]
   hideMadeWithLine = true
+
+[markup.highlight]
+  tabWidth = 2
