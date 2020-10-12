@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on readonly.dev.br</title>
+    <title>Tags on [ro]</title>
     <link>https://readonly.dev.br/tags/</link>
-    <description>Recent content in Tags on readonly.dev.br</description>
+    <description>Recent content in Tags on [ro]</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Copyright © 2020, Lenon Marcel.</copyright><atom:link href="https://readonly.dev.br/tags/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Copyright © 2020, Lenon Marcel.</copyright>
+    <lastBuildDate>Thu, 08 Oct 2020 02:28:29 +0000</lastBuildDate><atom:link href="https://readonly.dev.br/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rails</title>
+      <link>https://readonly.dev.br/tags/rails/</link>
+      <pubDate>Thu, 08 Oct 2020 02:28:29 +0000</pubDate>
+      
+      <guid>https://readonly.dev.br/tags/rails/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby</title>
+      <link>https://readonly.dev.br/tags/ruby/</link>
+      <pubDate>Thu, 08 Oct 2020 02:28:29 +0000</pubDate>
+      
+      <guid>https://readonly.dev.br/tags/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TIL</title>
+      <link>https://readonly.dev.br/tags/til/</link>
+      <pubDate>Thu, 08 Oct 2020 02:28:29 +0000</pubDate>
+      
+      <guid>https://readonly.dev.br/tags/til/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

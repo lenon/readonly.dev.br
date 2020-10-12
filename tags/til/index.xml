@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>[ro]</title>
-    <link>https://readonly.dev.br/</link>
-    <description>Recent content on [ro]</description>
+    <title>TIL on [ro]</title>
+    <link>https://readonly.dev.br/tags/til/</link>
+    <description>Recent content in TIL on [ro]</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2020, Lenon Marcel.</copyright>
-    <lastBuildDate>Thu, 08 Oct 2020 02:28:29 +0000</lastBuildDate><atom:link href="https://readonly.dev.br/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Oct 2020 02:28:29 +0000</lastBuildDate><atom:link href="https://readonly.dev.br/tags/til/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to List Rails Routes Programmatically</title>
       <link>https://readonly.dev.br/blog/how-to-list-rails-routes-programmatically/</link>

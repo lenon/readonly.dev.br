@@ -3,15 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://readonly.dev.br/categories/</loc>
+    <loc>https://readonly.dev.br/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://readonly.dev.br/</loc>
+    <loc>https://readonly.dev.br/blog/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://readonly.dev.br/blog/how-to-list-rails-routes-programmatically/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://readonly.dev.br/tags/rails/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://readonly.dev.br/tags/ruby/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://readonly.dev.br/tags/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://readonly.dev.br/tags/til/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://readonly.dev.br/categories/</loc>
   </url>
   
 </urlset>
