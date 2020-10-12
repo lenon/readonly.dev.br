@@ -14,10 +14,12 @@ git checkout gh-pages
 
 # sync new changes and remove stale files
 # keep .git intact because we need to commit files later
+# keep CNAME intact because it is used by GitHub pages
 rsync --verbose \
       --archive \
       --delete \
       --exclude .git \
+      --exclude CNAME \
       "$outputdir/" .
 
 # add changes, commit and push
