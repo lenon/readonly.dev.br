@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How to List Rails Routes Programmatically | [ro]</title>
+<meta name="title" content="How to List Rails Routes Programmatically" />
+<meta name="description" content="While developing a Rails app you can use the task bin/rails routes to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:
+Rails.application.routes.routes.each do |route| ... end The double .routes is not a typo as you can see:
+pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::RouteSet pry(main)&gt; Rails.application.routes.routes.class =&gt; ActionDispatch::Journey::Routes It is possible to replace the second routes by set like this if you prefer:" />
+<meta name="keywords" content="ruby,rails,TIL," />
+
+
+<meta property="og:title" content="How to List Rails Routes Programmatically" />
+<meta property="og:description" content="While developing a Rails app you can use the task bin/rails routes to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:
+Rails.application.routes.routes.each do |route| ... end The double .routes is not a typo as you can see:
+pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::RouteSet pry(main)&gt; Rails.application.routes.routes.class =&gt; ActionDispatch::Journey::Routes It is possible to replace the second routes by set like this if you prefer:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://readonly.dev.br/blog/how-to-list-rails-routes-programmatically/" />
+<meta property="article:published_time" content="2020-10-08T02:28:29+00:00" />
+<meta property="article:modified_time" content="2020-10-08T02:28:29+00:00" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to List Rails Routes Programmatically"/>
+<meta name="twitter:description" content="While developing a Rails app you can use the task bin/rails routes to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:
+Rails.application.routes.routes.each do |route| ... end The double .routes is not a typo as you can see:
+pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::RouteSet pry(main)&gt; Rails.application.routes.routes.class =&gt; ActionDispatch::Journey::Routes It is possible to replace the second routes by set like this if you prefer:"/>
+
+
+
+<meta itemprop="name" content="How to List Rails Routes Programmatically">
+<meta itemprop="description" content="While developing a Rails app you can use the task bin/rails routes to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:
+Rails.application.routes.routes.each do |route| ... end The double .routes is not a typo as you can see:
+pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::RouteSet pry(main)&gt; Rails.application.routes.routes.class =&gt; ActionDispatch::Journey::Routes It is possible to replace the second routes by set like this if you prefer:">
+<meta itemprop="datePublished" content="2020-10-08T02:28:29+00:00" />
+<meta itemprop="dateModified" content="2020-10-08T02:28:29+00:00" />
+<meta itemprop="wordCount" content="248">
+
+
+
+<meta itemprop="keywords" content="ruby,rails,TIL," />
+
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+<style>
+.highlight pre code {
+  color: inherit;
+  background-color: inherit;
+  white-space: pre;
+  overflow-y: auto;
+}
+</style></head>
+
+<body>
+  <header><a href="/" class="title">
+  <h2>[ro]</h2>
+</a>
+<nav><a href="/">Home</a>
+
+
+<a href="/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>How to List Rails Routes Programmatically</h1>
+<p>
+  <i>
+    <time datetime='2020-10-08' pubdate>
+      08 Oct, 2020
+    </time>
+  </i>
+</p>
+
+<content>
+  <p>While developing a Rails app you can use the task <code>bin/rails routes</code> to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>route<span style="color:#f92672">|</span>
+  <span style="color:#f92672">...</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>The double <code>.routes</code> is not a typo as you can see:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby">pry(main)<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>class
+<span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Routing</span><span style="color:#f92672">::</span><span style="color:#66d9ef">RouteSet</span>
+pry(main)<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>class
+<span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Journey</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Routes</span>
+</code></pre></div><p>It is possible to replace the second <code>routes</code> by <code>set</code> like this if you prefer:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby">pry(main)<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>set<span style="color:#f92672">.</span>class
+<span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Journey</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Routes</span>
+</code></pre></div><p>Each route is an <code>ActionDispatch::Journey::Route</code>. Controller name and action can be obtained by calling route requirements:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>route<span style="color:#f92672">|</span>
+  route<span style="color:#f92672">.</span>requirements<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">:controller</span>, <span style="color:#e6db74">:action</span>)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>To get path specification (<code>/example/:id(.:format)</code>):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>route<span style="color:#f92672">|</span>
+  route<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>spec<span style="color:#f92672">.</span>to_s
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>It is possible to extract more information like verb, constraints, name, etc as you can <a href="https://www.rubydoc.info/docs/rails/6.0.2.1/ActionDispatch/Journey/Route">read in the documentation</a>.</p>
+<p>I learned about this while working on <a href="https://github.com/lenon/rails_export_routes">rails_export_routes</a>, a small tool that I created to export Rails routes to CSV or JSON. With it you can easily export routes to a file:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">$ bundle exec rails-export-routes export --format json-pretty routes.json
+$ head -n 20 routes.json
+[
+  {
+    &#34;verb&#34;: &#34;GET&#34;,
+    &#34;path&#34;: &#34;/&#34;,
+    &#34;controller&#34;: &#34;dashboard&#34;,
+    &#34;action&#34;: &#34;home&#34;,
+    &#34;name&#34;: &#34;root&#34;,
+    &#34;constraints&#34;: {}
+  },
+  {
+    &#34;verb&#34;: &#34;GET&#34;,
+    &#34;path&#34;: &#34;/profile(.:format)&#34;,
+    &#34;controller&#34;: &#34;profile&#34;,
+    &#34;action&#34;: &#34;show&#34;,
+    &#34;name&#34;: &#34;profile&#34;,
+    &#34;constraints&#34;: {}
+  },
+  {
+    &#34;verb&#34;: &#34;GET&#34;,
+    &#34;path&#34;: &#34;/profile/edit(.:format)&#34;,
+    ...
+</code></pre></div><p>And then process them with other tools, like <code>jq</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">$ jq &#39;.[] | select(.verb==&#34;POST&#34; and (.path | startswith(&#34;/admin&#34;))) | .path&#39; routes.json
+&#34;/admin/users(.:format)&#34;
+&#34;/admin/groups(.:format)&#34;
+&#34;/admin/products(.:format)&#34;
+...
+</code></pre></div><p>You can read more about this <a href="https://github.com/lenon/rails_export_routes">project on GitHub</a>.</p>
+
+</content>
+<p>
+  
+  <a href="https://readonly.dev.br/tags/ruby/">#ruby</a>
+  
+  <a href="https://readonly.dev.br/tags/rails/">#rails</a>
+  
+  <a href="https://readonly.dev.br/tags/til/">#TIL</a>
+  
+</p>
+
+  </main>
+  <footer>
+</footer>
+
+    
+</body>
+
+</html>
