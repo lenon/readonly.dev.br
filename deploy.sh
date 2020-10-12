@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-# can't use /tmp with github actions for some reason
-outputdir="$RUNNER_TEMP/build"
+outputdir="$HOME/hugo-build"
 mkdir -p "$outputdir"
 
 # let's build the site using hugo and current branch
@@ -26,5 +25,5 @@ rsync --verbose \
 git add -- .
 git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
-git commit --allow-empty --message "deploy commit $GITHUB_SHA"
+git commit --allow-empty --message "publish changes from commit $GITHUB_SHA"
 git push origin gh-pages
