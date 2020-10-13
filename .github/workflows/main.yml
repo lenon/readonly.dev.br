@@ -13,4 +13,4 @@ jobs:
         run: sudo snap install hugo
 
       - name: Build and publish
-        run: ./deploy.sh
+        run: ./publish.sh

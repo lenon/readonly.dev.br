@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-outputdir="$HOME/hugo-build"
-mkdir -p "$outputdir"
+# useful for debugging
+hugo env
+hugo config
 
-# let's build the site using hugo and current branch
-hugo --verbose --destination "$outputdir"
+sitedir="$HOME/site-build"
+mkdir -p "$sitedir"
 
-# remove submodule and checkout to the branch used for github pages
-git submodule deinit .
-git checkout gh-pages
+# assuming we are on main branch
+# let's build the static site using Hugo
+hugo --verbose --destination "$sitedir"
+
+# gh-pages contains only static files and does not include Hugo source files
+git checkout --recurse-submodules gh-pages
 
 # sync new changes and remove stale files
 # keep .git intact because we need to commit files later
@@ -19,9 +23,10 @@ rsync --verbose \
       --delete \
       --exclude .git \
       --exclude CNAME \
-      "$outputdir/" .
+      "$sitedir/" .
 
 # add changes, commit and push
+# GitHub will then publish those pages
 git add -- .
 git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
