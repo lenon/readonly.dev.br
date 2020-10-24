@@ -4,7 +4,10 @@ date: 2020-10-08T02:28:29Z
 tags: [ruby,rails,TIL]
 ---
 
-While developing a Rails app you can use the task `bin/rails routes` to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:
+While developing a Rails app you can use the task `bin/rails routes` to list the
+available routes and their respective controllers and actions. But in case you
+need to list and manipulate them programmatically, you can use the following
+snippet:
 
 ```ruby
 Rails.application.routes.routes.each do |route|
@@ -28,7 +31,8 @@ pry(main)> Rails.application.routes.set.class
 => ActionDispatch::Journey::Routes
 ```
 
-Each route is an `ActionDispatch::Journey::Route`. Controller name and action can be obtained by calling route requirements:
+Each route is an `ActionDispatch::Journey::Route`. Controller name and action
+can be obtained by calling route requirements:
 
 ```ruby
 Rails.application.routes.routes.map do |route|
@@ -44,9 +48,12 @@ Rails.application.routes.routes.map do |route|
 end
 ```
 
-It is possible to extract more information like verb, constraints, name, etc as you can [read in the documentation][1].
+It is possible to extract more information like verb, constraints, name, etc as
+you can [read in the documentation][1].
 
-I learned about this while working on [rails_export_routes][2], a small tool that I created to export Rails routes to CSV or JSON. With it you can easily export routes to a file:
+I learned about this while working on [rails_export_routes][2], a small tool
+that I created to export Rails routes to CSV or JSON. With it you can easily
+export routes to a file:
 
 ```text
 $ bundle exec rails-export-routes export --format json-pretty routes.json
