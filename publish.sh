@@ -34,6 +34,8 @@ rsync --verbose \
 
 # add changes, commit and push
 # GitHub will then publish those pages
+git config user.name github-actions
+git config user.email github-actions@github.com
 git add -- .
 git commit --allow-empty --message "publish changes from commit $GITHUB_SHA"
 git push origin gh-pages
