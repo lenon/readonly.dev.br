@@ -239,7 +239,10 @@ pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::Rout
 </p>
 
 <content>
-  <p>While developing a Rails app you can use the task <code>bin/rails routes</code> to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:</p>
+  <p>While developing a Rails app you can use the task <code>bin/rails routes</code> to list the
+available routes and their respective controllers and actions. But in case you
+need to list and manipulate them programmatically, you can use the following
+snippet:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>each <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>route<span style="color:#f92672">|</span>
   <span style="color:#f92672">...</span>
 <span style="color:#66d9ef">end</span>
@@ -251,7 +254,8 @@ pry(main)<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">Rai
 </code></pre></div><p>It is possible to replace the second <code>routes</code> by <code>set</code> like this if you prefer:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby">pry(main)<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>set<span style="color:#f92672">.</span>class
 <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">ActionDispatch</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Journey</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Routes</span>
-</code></pre></div><p>Each route is an <code>ActionDispatch::Journey::Route</code>. Controller name and action can be obtained by calling route requirements:</p>
+</code></pre></div><p>Each route is an <code>ActionDispatch::Journey::Route</code>. Controller name and action
+can be obtained by calling route requirements:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>route<span style="color:#f92672">|</span>
   route<span style="color:#f92672">.</span>requirements<span style="color:#f92672">.</span>slice(<span style="color:#e6db74">:controller</span>, <span style="color:#e6db74">:action</span>)
 <span style="color:#66d9ef">end</span>
@@ -259,8 +263,11 @@ pry(main)<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">Rai
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>application<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>routes<span style="color:#f92672">.</span>map <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>route<span style="color:#f92672">|</span>
   route<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>spec<span style="color:#f92672">.</span>to_s
 <span style="color:#66d9ef">end</span>
-</code></pre></div><p>It is possible to extract more information like verb, constraints, name, etc as you can <a href="https://www.rubydoc.info/docs/rails/6.0.2.1/ActionDispatch/Journey/Route">read in the documentation</a>.</p>
-<p>I learned about this while working on <a href="https://github.com/lenon/rails_export_routes">rails_export_routes</a>, a small tool that I created to export Rails routes to CSV or JSON. With it you can easily export routes to a file:</p>
+</code></pre></div><p>It is possible to extract more information like verb, constraints, name, etc as
+you can <a href="https://www.rubydoc.info/docs/rails/6.0.2.1/ActionDispatch/Journey/Route">read in the documentation</a>.</p>
+<p>I learned about this while working on <a href="https://github.com/lenon/rails_export_routes">rails_export_routes</a>, a small tool
+that I created to export Rails routes to CSV or JSON. With it you can easily
+export routes to a file:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">$ bundle exec rails-export-routes export --format json-pretty routes.json
 $ head -n 20 routes.json
 [
