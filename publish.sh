@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+sudo snap install hugo
+
 # useful for debugging
 hugo env
 hugo config
@@ -33,7 +35,5 @@ rsync --verbose \
 # add changes, commit and push
 # GitHub will then publish those pages
 git add -- .
-git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-git config --local user.name "github-actions[bot]"
 git commit --allow-empty --message "publish changes from commit $GITHUB_SHA"
 git push origin gh-pages
