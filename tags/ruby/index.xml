@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ruby on [ro]</title>
+    <title>ruby on readonly</title>
     <link>https://readonly.dev.br/tags/ruby/</link>
-    <description>Recent content in ruby on [ro]</description>
+    <description>Recent content in ruby on readonly</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2020, Lenon Marcel.</copyright>
