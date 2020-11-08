@@ -1,6 +1,6 @@
 baseURL = "https://readonly.dev.br/"
 languageCode = "en-us"
-title = "[ro]"
+title = "readonly"
 theme = "hugo-bearblog"
 author = "Lenon Marcel"
 copyright = "Copyright © 2020, Lenon Marcel."
