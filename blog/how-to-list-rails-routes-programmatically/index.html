@@ -16,9 +16,10 @@ pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::Rout
 Rails.application.routes.routes.each do |route| ... end The double .routes is not a typo as you can see:
 pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::RouteSet pry(main)&gt; Rails.application.routes.routes.class =&gt; ActionDispatch::Journey::Routes It is possible to replace the second routes by set like this if you prefer:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://readonly.dev.br/blog/how-to-list-rails-routes-programmatically/" />
-<meta property="article:published_time" content="2020-10-08T02:28:29+00:00" />
-<meta property="article:modified_time" content="2020-10-08T02:28:29+00:00" />
+<meta property="og:url" content="https://readonly.dev.br/blog/how-to-list-rails-routes-programmatically/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2020-10-08T02:28:29&#43;00:00" />
+<meta property="article:modified_time" content="2020-10-08T02:28:29&#43;00:00" />
+
 
 
 
@@ -33,15 +34,10 @@ pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::Rout
 <meta itemprop="name" content="How to List Rails Routes Programmatically">
 <meta itemprop="description" content="While developing a Rails app you can use the task bin/rails routes to list the available routes and their respective controllers and actions. But in case you need to list and manipulate them programmatically, you can use the following snippet:
 Rails.application.routes.routes.each do |route| ... end The double .routes is not a typo as you can see:
-pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::RouteSet pry(main)&gt; Rails.application.routes.routes.class =&gt; ActionDispatch::Journey::Routes It is possible to replace the second routes by set like this if you prefer:">
-<meta itemprop="datePublished" content="2020-10-08T02:28:29+00:00" />
-<meta itemprop="dateModified" content="2020-10-08T02:28:29+00:00" />
+pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::RouteSet pry(main)&gt; Rails.application.routes.routes.class =&gt; ActionDispatch::Journey::Routes It is possible to replace the second routes by set like this if you prefer:"><meta itemprop="datePublished" content="2020-10-08T02:28:29&#43;00:00" />
+<meta itemprop="dateModified" content="2020-10-08T02:28:29&#43;00:00" />
 <meta itemprop="wordCount" content="248">
-
-
-
 <meta itemprop="keywords" content="ruby,rails,TIL," />
-
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
   <style>
@@ -121,9 +117,9 @@ pry(main)&gt; Rails.application.routes.class =&gt; ActionDispatch::Routing::Rout
     font-size: 14px;
   }
 
-  .highlight pre code {
+  div.highlight code {
+    background-color: unset;
     color: inherit;
-    background-color: inherit;
     white-space: pre;
     overflow-y: auto;
   }
