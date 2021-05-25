@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caching HTTP requests with Python | readonly</title>
+<meta name="title" content="Caching HTTP requests with Python" />
+<meta name="description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation." />
+<meta name="keywords" content="python,http,TIL," />
+
+
+<meta property="og:title" content="Caching HTTP requests with Python" />
+<meta property="og:description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://readonly.dev.br/blog/caching-http-requests-with-python/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-05-24T22:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-24T22:00:00&#43;00:00" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Caching HTTP requests with Python"/>
+<meta name="twitter:description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation."/>
+
+
+
+<meta itemprop="name" content="Caching HTTP requests with Python">
+<meta itemprop="description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation."><meta itemprop="datePublished" content="2021-05-24T22:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-05-24T22:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="515">
+<meta itemprop="keywords" content="python,http,TIL," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: inherit;
+    white-space: pre;
+    overflow-y: auto;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="/" class="title">
+  <h2 title="readonly">[ro]</h2>
+</a>
+<nav><a href="/">Home</a>
+
+
+<a href="/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>Caching HTTP requests with Python</h1>
+<p>
+  <i>
+    <time datetime='2021-05-24' pubdate>
+      24 May, 2021
+    </time>
+  </i>
+</p>
+
+<content>
+  <p>While writing a small Python library to download and parse a large CSV file from
+the web, I had to implement a strategy to cache the file locally and avoid
+downloading it on every execution. I wanted the library to download the file
+only once on the first execution and also when it has changed on the server. In
+this blog post I&rsquo;m describing how to implement this with Python, basic HTTP
+headers and file manipulation.</p>
+<p>Let&rsquo;s start by looking at these two HTTP headers used to control cache:</p>
+<ul>
+<li><code>Last-Modified</code>: according to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified">MDN</a>, this is a response
+header sent by HTTP servers and it &ldquo;contains the date and time at which the
+origin server believes the resource was last modified&rdquo;.</li>
+<li><code>If-Modified-Since</code>: also according to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since">MDN</a>, this is a
+request header and it &ldquo;makes the request conditional: the server will send
+back the requested resource, with a 200 status, only if it has been last
+modified after the given date. If the resource has not been modified since,
+the response will be a 304 without any body&rdquo;.</li>
+</ul>
+<p>So I can store the value of <code>Last-Modified</code> and send it in the next HTTP request
+as the value for <code>If-Modified-Since</code>. The server will return a 200 status and a
+body only if the file has been modified.</p>
+<p>Both headers contain a timestamp in the format defined by <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.1.1">RFC 7231</a> as
+an &ldquo;HTTP-date&rdquo; and Python has functions to handle this format. They can be
+imported from the module <code>email.utils</code> and, despite the module name, are
+compatible with the HTTP standard. Here&rsquo;s an example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+<span style="color:#f92672">from</span> email.utils <span style="color:#f92672">import</span> parsedate_to_datetime, formatdate
+
+formatdate(datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>timestamp(), usegmt<span style="color:#f92672">=</span>True)
+<span style="color:#75715e"># &#39;Sat, 22 May 2021 03:08:49 GMT&#39;</span>
+
+parsedate_to_datetime(<span style="color:#e6db74">&#39;Sat, 22 May 2021 03:08:49 GMT&#39;</span>)
+<span style="color:#75715e"># datetime.datetime(2021, 5, 22, 3, 8, 49, tzinfo=datetime.timezone.utc)</span>
+</code></pre></div><p>It is important to pass <code>usegmt=True</code> to <code>formatdate</code> because HTTP dates are
+always expressed in GMT.</p>
+<p>I can use file&rsquo;s modification time (<code>mtime</code>) to store the modification time
+indicated by the HTTP response. Python has
+<a href="https://docs.python.org/3/library/os.path.html#os.path.getmtime"><code>os.path.getmtime</code></a> to get modification time and
+<a href="https://docs.python.org/3/library/os.html#os.utime"><code>os.utime</code></a> to change it:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+
+os<span style="color:#f92672">.</span>utime(<span style="color:#e6db74">&#34;hello.txt&#34;</span>, times<span style="color:#f92672">=</span>(datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>timestamp(), <span style="color:#ae81ff">1621653735.0</span>))
+os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>getmtime(<span style="color:#e6db74">&#34;hello.txt&#34;</span>)
+<span style="color:#75715e"># 1621653735.0</span>
+</code></pre></div><p>Now, let&rsquo;s see the actual download function. I&rsquo;ve used
+<a href="https://docs.python-requests.org/">requests</a> to make the HTTP request as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> requests
+<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+<span style="color:#f92672">from</span> email.utils <span style="color:#f92672">import</span> parsedate_to_datetime, formatdate
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">download</span>(url, destination_file):
+    headers <span style="color:#f92672">=</span> {}
+
+    <span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(destination_file):
+        mtime <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>getmtime(destination_file)
+        headers[<span style="color:#e6db74">&#34;if-modified-since&#34;</span>] <span style="color:#f92672">=</span> formatdate(mtime, usegmt<span style="color:#f92672">=</span>True)
+
+    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers, stream<span style="color:#f92672">=</span>True)
+    response<span style="color:#f92672">.</span>raise_for_status()
+
+    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> requests<span style="color:#f92672">.</span>codes<span style="color:#f92672">.</span>not_modified:
+        <span style="color:#66d9ef">return</span>
+
+    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> requests<span style="color:#f92672">.</span>codes<span style="color:#f92672">.</span>ok:
+        <span style="color:#66d9ef">with</span> open(destination_file, <span style="color:#e6db74">&#34;wb&#34;</span>) <span style="color:#66d9ef">as</span> f:
+            <span style="color:#66d9ef">for</span> chunk <span style="color:#f92672">in</span> response<span style="color:#f92672">.</span>iter_content(chunk_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1048576</span>):
+                f<span style="color:#f92672">.</span>write(chunk)
+
+        <span style="color:#66d9ef">if</span> last_modified :<span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;last-modified&#34;</span>):
+            new_mtime <span style="color:#f92672">=</span> parsedate_to_datetime(last_modified)<span style="color:#f92672">.</span>timestamp()
+            os<span style="color:#f92672">.</span>utime(destination_file, times<span style="color:#f92672">=</span>(datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>timestamp(), new_mtime))
+</code></pre></div><p>Here&rsquo;s some important parts of this function:</p>
+<ul>
+<li><code>response.raise_for_status()</code> will raise an error for 4xx (client errors) or
+5xx (server errors).</li>
+<li><code>requests.get(..., stream=True)</code> and
+<code>response.iter_content(chunk_size=1048576)</code> are used to iterate over the
+response data and are important to avoid reading the full dataset into memory.
+<code>chunk_size</code> is the number of bytes which is, in this case, 1 MiB.</li>
+</ul>
+<p>The <code>download</code> function can be used like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-python" data-lang="python">dataset_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv&#34;</span>
+
+download(dataset_url, <span style="color:#e6db74">&#34;dataset.csv&#34;</span>)
+</code></pre></div><p>Calling it multiple times will update the dataset only if it has changed on the
+server, as expected.</p>
+
+</content>
+<p>
+  
+  <a href="https://readonly.dev.br/tags/python/">#python</a>
+  
+  <a href="https://readonly.dev.br/tags/http/">#http</a>
+  
+  <a href="https://readonly.dev.br/tags/til/">#TIL</a>
+  
+</p>
+
+  </main>
+  <footer>
+</footer>
+
+    
+</body>
+
+</html>

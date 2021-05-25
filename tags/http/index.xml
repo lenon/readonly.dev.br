@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>http on readonly</title>
+    <link>https://readonly.dev.br/tags/http/</link>
+    <description>Recent content in http on readonly</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2020, Lenon Marcel.</copyright>
+    <lastBuildDate>Mon, 24 May 2021 22:00:00 +0000</lastBuildDate><atom:link href="https://readonly.dev.br/tags/http/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Caching HTTP requests with Python</title>
+      <link>https://readonly.dev.br/blog/caching-http-requests-with-python/</link>
+      <pubDate>Mon, 24 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://readonly.dev.br/blog/caching-http-requests-with-python/</guid>
+      <description>While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&amp;rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation.</description>
+    </item>
+    
+  </channel>
+</rss>

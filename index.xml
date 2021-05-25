@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2020, Lenon Marcel.</copyright>
-    <lastBuildDate>Sun, 25 Oct 2020 21:00:00 +0000</lastBuildDate><atom:link href="https://readonly.dev.br/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 May 2021 22:00:00 +0000</lastBuildDate><atom:link href="https://readonly.dev.br/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Caching HTTP requests with Python</title>
+      <link>https://readonly.dev.br/blog/caching-http-requests-with-python/</link>
+      <pubDate>Mon, 24 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://readonly.dev.br/blog/caching-http-requests-with-python/</guid>
+      <description>While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&amp;rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation.</description>
+    </item>
+    
     <item>
       <title>How to publish a blog on GitHub Pages with Hugo and GitHub Actions</title>
       <link>https://readonly.dev.br/blog/how-to-publish-a-blog-on-github-pages-with-hugo-and-github-actions/</link>
