@@ -1,7 +1,7 @@
 ---
-title: "Caching HTTP requests with Python"
+title: "Downloading and caching large files using Python"
 date: 2021-05-24T22:00:00Z
-tags: [python,http,TIL]
+tags: [python,http]
 ---
 
 While writing a small Python library to download and parse a large CSV file from
@@ -109,7 +109,9 @@ download(dataset_url, "dataset.csv")
 ```
 
 Calling it multiple times will update the dataset only if it has changed on the
-server, as expected.
+server, as expected. Depending on the situation, it would be good to also
+implement a check on the `Cache-Control` header, but for now this is good
+enough.
 
 [mdn-last-modified]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified
 [mdn-if-modified-since]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since
