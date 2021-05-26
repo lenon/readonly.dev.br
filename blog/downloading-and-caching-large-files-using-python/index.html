@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Caching HTTP requests with Python | readonly</title>
-<meta name="title" content="Caching HTTP requests with Python" />
+<title>Downloading and caching large files using Python | readonly</title>
+<meta name="title" content="Downloading and caching large files using Python" />
 <meta name="description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation." />
-<meta name="keywords" content="python,http,TIL," />
+<meta name="keywords" content="python,http," />
 
 
-<meta property="og:title" content="Caching HTTP requests with Python" />
+<meta property="og:title" content="Downloading and caching large files using Python" />
 <meta property="og:description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://readonly.dev.br/blog/caching-http-requests-with-python/" /><meta property="article:section" content="blog" />
+<meta property="og:url" content="https://readonly.dev.br/blog/downloading-and-caching-large-files-using-python/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2021-05-24T22:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2021-05-24T22:00:00&#43;00:00" />
 
@@ -20,16 +20,16 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Caching HTTP requests with Python"/>
+<meta name="twitter:title" content="Downloading and caching large files using Python"/>
 <meta name="twitter:description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation."/>
 
 
 
-<meta itemprop="name" content="Caching HTTP requests with Python">
+<meta itemprop="name" content="Downloading and caching large files using Python">
 <meta itemprop="description" content="While writing a small Python library to download and parse a large CSV file from the web, I had to implement a strategy to cache the file locally and avoid downloading it on every execution. I wanted the library to download the file only once on the first execution and also when it has changed on the server. In this blog post I&rsquo;m describing how to implement this with Python, basic HTTP headers and file manipulation."><meta itemprop="datePublished" content="2021-05-24T22:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2021-05-24T22:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="515">
-<meta itemprop="keywords" content="python,http,TIL," />
+<meta itemprop="wordCount" content="539">
+<meta itemprop="keywords" content="python,http," />
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
   <style>
@@ -217,7 +217,7 @@
 </header>
   <main>
 
-<h1>Caching HTTP requests with Python</h1>
+<h1>Downloading and caching large files using Python</h1>
 <p>
   <i>
     <time datetime='2021-05-24' pubdate>
@@ -313,7 +313,9 @@ response data and are important to avoid reading the full dataset into memory.
 
 download(dataset_url, <span style="color:#e6db74">&#34;dataset.csv&#34;</span>)
 </code></pre></div><p>Calling it multiple times will update the dataset only if it has changed on the
-server, as expected.</p>
+server, as expected. Depending on the situation, it would be good to also
+implement a check on the <code>Cache-Control</code> header, but for now this is good
+enough.</p>
 
 </content>
 <p>
@@ -321,8 +323,6 @@ server, as expected.</p>
   <a href="https://readonly.dev.br/tags/python/">#python</a>
   
   <a href="https://readonly.dev.br/tags/http/">#http</a>
-  
-  <a href="https://readonly.dev.br/tags/til/">#TIL</a>
   
 </p>
 

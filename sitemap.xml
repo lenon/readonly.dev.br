@@ -5,22 +5,19 @@
     <loc>https://readonly.dev.br/</loc>
     <lastmod>2021-05-24T22:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://readonly.dev.br/blog/</loc>
-    <lastmod>2021-05-24T22:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://readonly.dev.br/blog/caching-http-requests-with-python/</loc>
+    <loc>https://readonly.dev.br/blog/downloading-and-caching-large-files-using-python/</loc>
     <lastmod>2021-05-24T22:00:00+00:00</lastmod>
   </url><url>
     <loc>https://readonly.dev.br/tags/http/</loc>
+    <lastmod>2021-05-24T22:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://readonly.dev.br/blog/</loc>
     <lastmod>2021-05-24T22:00:00+00:00</lastmod>
   </url><url>
     <loc>https://readonly.dev.br/tags/python/</loc>
     <lastmod>2021-05-24T22:00:00+00:00</lastmod>
   </url><url>
     <loc>https://readonly.dev.br/tags/</loc>
-    <lastmod>2021-05-24T22:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://readonly.dev.br/tags/til/</loc>
     <lastmod>2021-05-24T22:00:00+00:00</lastmod>
   </url><url>
     <loc>https://readonly.dev.br/tags/blogging/</loc>
@@ -42,6 +39,9 @@
     <lastmod>2020-10-08T02:28:29+00:00</lastmod>
   </url><url>
     <loc>https://readonly.dev.br/tags/ruby/</loc>
+    <lastmod>2020-10-08T02:28:29+00:00</lastmod>
+  </url><url>
+    <loc>https://readonly.dev.br/tags/til/</loc>
     <lastmod>2020-10-08T02:28:29+00:00</lastmod>
   </url><url>
     <loc>https://readonly.dev.br/categories/</loc>
